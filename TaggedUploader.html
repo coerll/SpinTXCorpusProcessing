@@ -1,0 +1,11 @@
+<!-- This file is used to upload the results from TreeTagger as well as the timed file. -->
+<form enctype="multipart/form-data" action="DataCombiner.php" method="POST">
+Choose the file to upload that has been tagged in English: <input name="uploadedfile[]" type="file" id="uploadedfile[]" /><br />
+Choose the file to upload that has been tagged in Spanish: <input name="uploadedfile[]" type="file" id="uploadedfile[]" /><br />
+<!--This option allows the user to determine whether they want their output to be a single file or multiple files.-->
+Choose the srt file(s) to upload: <input name="file[]" type="file" id="file[]" multiple /><br />
+Would you like to have a single file created or one file for each original file? <br />
+One File:<input type="radio" value="One" name="NFiles">:<br />
+One for each:<input type="radio" value="Multiple" name="NFiles">:<br />
+<input type="submit" value="Upload Files" />
+</form>
