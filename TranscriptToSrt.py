@@ -4,7 +4,7 @@
 """This script uploads your transcript to YouTube.
 Based on the script created by jeffy@google.com (Jeffrey Posnick) for the
 YouTube API demo.
-Last updated on January 15, 2013"""
+Last updated on May 2, 2013"""
 
 __author__ = "ahwendorf2@gmail.com (Arthur Wendorf)"
 
@@ -32,19 +32,19 @@ class CaptionsDemo(object):
   # CONSTANTS
   # The client id, secret, and developer key are copied from
   # the Google APIs Console <http://code.google.com/apis/console>
-  CLIENT_ID = "############.apps.googleusercontent.com"
-  CLIENT_SECRET = "************************"
+  CLIENT_ID = "342253789856.apps.googleusercontent.com"
+  CLIENT_SECRET = "Tm6EEUYebcTDTX5VXgshcIfd"
   
   # Register for a YouTube API developer key at
   # <http://code.google.com/apis/youtube/dashboard/>
-  YOUTUBE_DEVELOPER_KEY = ("**************************************************************************************************")
+  YOUTUBE_DEVELOPER_KEY = ("AI39si49l1wStP2FYHyDR5G0oKRUlyHVr6nIG490nBSAP9cZ8_9STDvA0YH1J1GnrJ8MuYuNHuFKlHq9nmt7Ri4lbvz2il8BWA")
 
   # Hardcoded YouTube API constants.
   OAUTH_SCOPE = "https://gdata.youtube.com"
   CAPTIONS_URL_FORMAT = ("http://gdata.youtube.com/feeds/api/videos/%s/"
                          "captions?alt=json")
   CAPTIONS_CONTENT_TYPE = "application/vnd.youtube.timedtext; charset=UTF-8"
-  CAPTIONS_TITLE = "******"
+  CAPTIONS_TITLE = "SPinTX"
   CAPTIONS_LANGUAGE_CODE = "es"################language option###############
 
   def __init__(self, video_id):
@@ -77,7 +77,6 @@ class CaptionsDemo(object):
 
   def SetupHttpRequestObject(self):
     """Creates an httplib2 client and request headers for later use.
-
     There are certain request headers that all YouTube API requests need to
     include, so we set them up once here.
     The Google API Client library takes care of associating the OAuth2
@@ -90,6 +89,7 @@ class CaptionsDemo(object):
     self.http = self.credentials.authorize(httplib2.Http())
 
   def UploadTranscript(self):
+    """Uploads transcripts to YouTube."""
     self.headers["Content-Type"] = self.CAPTIONS_CONTENT_TYPE
     self.headers["Content-Language"] = self.CAPTIONS_LANGUAGE_CODE
     self.headers["Slug"] = self.CAPTIONS_TITLE

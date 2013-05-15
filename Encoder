@@ -1,0 +1,6 @@
+REM Originally prepared by Arthur Wendorf Spring of 2013.
+REM Last updated on 2 May 2013.
+
+REM This creates and then runs Reencoder.
+php -Reencoder.php
+./Reencoder

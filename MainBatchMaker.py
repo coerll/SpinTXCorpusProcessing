@@ -4,12 +4,12 @@
 # Originally prepared by Arthur Wendorf in Fall 2012
 # Last updated January 15, 2013
 
-# This is the namve of the batch file to be created.
-NewBatchFile = open("MainProcessor", 'w')
+# This is the name of the batch file to be created.
+NewBatchFile = open('MainProcessor', 'w')
 
 # This is the name of the tab-delimited text file that contains the following columns:
 # Interview ID, Location of Transcripts relative to MainBatchMaker.py, YouTube ID
-SourceFile = open("MainInput.txt", 'r')
+SourceFile = open('MainInput.txt', 'r')
 
 # Here we are pulling the data from the SourceFile and putting it into an array.
 SourceBody = SourceFile.read()
@@ -34,18 +34,18 @@ NewBatchFile.write("cd ..\n")
 # We go through each video that we will be working with and submit its transcript to YouTube.
 for itemA in SourceData:
     if (tracker != 0):
-        NewBatchFile.write('python TranscriptToSrt.py --video-id='+itemA[2]+' --transcript-id='+itemA[1]+'\n')
+        NewBatchFile.write('python TranscriptToSrt.py --video-id='+itemA[2]+' --transcript-id=transcripts/'+itemA[1]+'\n')
         NewBatchFile.write('sleep 30\n')
     tracker += 1
 tracker = 0
 
 # We go through each video and download its caption file in srt format.
-for itemB in SourceData:
-    if (tracker != 0):
-        NewBatchFile.write('python SrtGatherer.py --video-id='+itemB[2]+'\n')
-        NewBatchFile.write('sleep 30\n')
-    tracker += 1
+#for itemB in SourceData:
+#    if (tracker != 0):
+#        NewBatchFile.write('python SrtGatherer.py --video-id='+itemB[2]+'\n')
+#        NewBatchFile.write('sleep 30\n')
+#    tracker += 1
 
 # We finally combine the data from the TreeTagger results, the srt file, and the custom tagging script.
-NewBatchFile.write('php -f DataCombinerLocal.php\n')
+#NewBatchFile.write('php -f DataCombinerLocal.php\n')
 NewBatchFile.close()

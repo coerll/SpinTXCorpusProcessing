@@ -1,0 +1,3 @@
+php -f ClipTagMaker.php
+php -f ClipHTML.php
+php -f SRTClipper.php

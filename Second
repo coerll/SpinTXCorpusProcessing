@@ -1,0 +1,15 @@
+# REM Prepared by Arthur Wendorf Spring 2013
+# REM Last modified by Arthur Wendorf 2 May 2013
+
+# REM This script processes transcripts that start out as srts.
+# REM This prepares the transcript for analysis by TreeTagger.
+php -f Repreparer.php
+
+# REM This is TreeTagger.
+cd TreeTagger/
+Cat ../Processing/Prepared.txt |cmd/tree-tagger-english>../Processing/File2.txt
+Cat ../Processing/Prepared.txt |cmd/tree-tagger-spanish-utf8>../Processing/File3.txt
+cd ..
+
+# REM This puts all of the tags together.
+php -f SecondCombiner.php

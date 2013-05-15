@@ -1,6 +1,6 @@
 <?php
 /* The purpose of this script is to combine the timing data and TreeTagger data and to tag for additional information.
- * This script was originally prepared by Arthur Wendorf during the summer of 2012.
+ * This script is derived from DataCombinerLocal.php and was originally prepared by Arthur Wendorf Spring 2013.
  * Last updated on May 2, 2013.
  */
 
@@ -44,11 +44,11 @@ function arrayMaker(&$arr, $fh) {
 			//pulls the line
 			$newText = fgets($fh);
 			
-			//creates the array entry
-			$arr[$tracker] = trim($newText);
-			
-			//increments the counter to be used as the key
-			$tracker++;
+				//creates the array entry
+				$arr[$tracker] = trim($newText);
+				
+				//increments the counter to be used as the key
+				$tracker++;
 		}
 				
 		//points back at the start of the array
@@ -161,7 +161,6 @@ function blowChunks(&$arr) {
 					$tracker++;
 				}
 			}
-			
 			//Executes for chunks separated by a space.
 			else {
 				for ($i = 0; $i <= mb_substr_count($line, " ", "UTF-8"); $i++) {
@@ -181,7 +180,7 @@ function blowChunks(&$arr) {
 
 //This cycles through the given array to look for a match and returns the target.
 function findMatch($arr, $target, &$start, &$diff, $idioma, &$log, $hasAp, $lenDiff) {
-	
+
 	//this tracks the location in the spanish array, the english array tends to get ahead of itself because it separates compound words
 	$startingPoint = $start;
 	if ($idioma == "English"){
@@ -239,7 +238,6 @@ function findEnglish($word, $ArrayE) {
 	return in_array($word, $ArrayE);
 }
 
-//This function attempts to identify tense, aspect, mood, number and person based on morphology of ar verbs.
 function findAr ($word, $neutral, &$newText){
 	$found = true;
 	//these conditionals seek for patterns in possible word endings, and output tags accordingly
@@ -340,7 +338,6 @@ function findAr ($word, $neutral, &$newText){
 	return $found;
 }
 
-//Does the same thing for er and ir verbs.
 function findErIr ($word, $neutral, &$newText){
 	$found = true;
 	if (mb_ereg("ese$", $word) or mb_ereg("era$", $word)){
@@ -471,11 +468,15 @@ $HFEng7 = "HFEng7.txt";
 $HFEng8 = "HFEng8.txt";
 $HFEng9 = "HFEng9.txt";
 $HFEng10 = "HFEng10.txt";
-$HFAmbi = "HFEngConflicts2.txt";
+$HFAmbi = "HFEngConflicts.txt";
+
+//this is a file used for debugging purposes when running the program online
+$Bugger = "Processing/Bugger.txt";
+$fb = fopen($Bugger, 'w');
 
 //This file contains the following information, which is then put into an array:
 //Interview ID, Location of Transcripts relative to MainBatchMaker.py, YouTube ID
-$fIDs = "MainInput.txt";
+$fIDs = "SecondInput.txt";
 
 $fhIDs = fopen($fIDs, 'r');
 
@@ -525,7 +526,8 @@ $fhAmb = fopen($HFAmbi, 'r') or die("can't open HFAmbi");
 //opens a handle for each time-tagged file
 for ($n = 1; $n <= $i; $n++) {
 	if (strlen($Files4[$n]) > 12) {
-		$Handles4[$n] = fopen("Processing/SRT/".$Files4[$n].".srt", 'r');
+		$Files4[$n] = trim($Files4[$n]);
+		$Handles4[$n] = fopen("Processing/SRT/".$Files4[$n].".txt", 'r');
 	}
 }
 
@@ -663,7 +665,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 			$EngID2 = false;
 			$BlownAway = false;
 			
-			//Identifies the speaker.
+			//Identify speaker.
 			if (mb_strpos($value, ">")!== false and mb_strpos($value, "i") <= mb_strpos($value, ">") + 3) {
 				$spoken = ">>i";
 			}
@@ -673,7 +675,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 			if(mb_strpos($value, "he's")!== false){
 				$EngID = true;
 			}
-			//get rid of non-word stuff
+			//Remove non-word stuff.
 			$value = mb_ereg_replace('>>i', "", $value);
 			$value = mb_ereg_replace('>>s', "", $value);
 			$value = mb_ereg_replace('>> i', "", $value);
@@ -731,7 +733,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 					elseif($length == 9) {$tarE = $ArrayEng9; }
 					else {$tarE = $ArrayEng10; }
 					
-					//these first few statements help identify English words as documented by TreeTagger.
+					//Identifies words that are likely English.
 					if ($target == "s") {
 						$target = "'s";
 						$EngID2 = true;
@@ -763,7 +765,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 						$guess = true;
 					}
 
-					//executes if the target is in the 5000 most frequent English words or is probably English.
+					//executes if the target is in the 5000 most frequent English words
 					if (($guess == true and $previousL == "English") or findEnglish($target, $tarE) or $target == "'cause" or $EngID2 == true) {
 						
 						//stores the results from searching in the english data
@@ -810,7 +812,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 //close the new file
 fclose($fh5);
 
-//fclose($fb);
+fclose($fb);
 
 //open the new file back up, it is now the old file (this is the second stage)
 $File5 = "Processing/File5.txt";

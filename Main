@@ -1,0 +1,7 @@
+# REM Created by Arthur Wendorf Spring 2013
+# REM Last modified by Arthur Wendorf 2 May 2013
+# REM Creates MainProcessor based on data in MainInput.txt
+python MainBatchMaker.py
+
+# REM Prepares transcripts for TreeTagger, runs TreeTagger, uploads transcripts to Youtube, downloads SRTs, combines data
+./MainProcessor
