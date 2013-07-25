@@ -13,13 +13,13 @@ mb_regex_encoding('UTF-8');
 
 //these are all of the POS tags for simplification
 $Adjective = array("your", "ADJ", "JJ", "JJR", "JJS", "ORD");
-$Adverb = array("ADV", "RB", "RBR", "RBS", "Wh-adverb", "NEG");
+$Adverb = array("ADV", "RB", "RBR", "RBS", "Wh-adverb", "NEG", "WRB");
 $Conjunction = array("CC", "CCAD", "CCNEG", "CQUE", "CSUBF", "CSUBI", "CSUBX");
-$Determiner = array("ART", "DM", "CARD", "QU");
+$Determiner = array("ART", "DM", "CARD", "QU", "DT");
 $Noun = array("NC", "NMEA", "NMON", "NN", "NNS", "NP", "NPS");
 $Other = array("Error", "ACRNM", "ALFP", "ALFS", "CD", "CODE", "DT", "EX", "FO", "FW", "ITJN", "LS", "PDT", "PE", "POS", "RP", "SE", "TO", "UH", "UMMX", "WDT");
 $Preposition = array("IN", "PAL", "PDEL", "PREP", "PREP/DEL");
-$Pronoun = array("INT", "PP", "PPC", "PPO", "PPX", "REL", "WP", "WP$");
+$Pronoun = array("INT", "PP", "PPC", "PPO", "PPX", "REL", "WP", "WP$", "PP$");
 $Punctuation = array("BACKSLASH", "CM", "COLON", "DASH", "DOTS", "FS", "LP", "PERCT", "QT", "RP", "SEMICOLON", "SLASH", "SYM");
 $Unknown = array("PNC");
 $Verb = array("MD", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ", "VCLIger", "VCLIinf", "VCLIfin", "VEadj", "VEfin", "VEger", "VEinf", "VHadj", "VHfin", "VHger", "VHinf", "VLadj", "VLfin", "VLger", "VLinf", "VMadj", "VMfin", "VMger", "VMinf", "VSadj", "VSfin", "VSger", "VSinf");
@@ -700,7 +700,7 @@ foreach($ArrayOf4s as $Name => $Array4) {
 			$value = mb_ereg_replace('\)', " ) ", $value);
 			$value = mb_ereg_replace('\[', " [ ", $value);
 			$value = mb_ereg_replace('\]', " ] ", $value);
-			$value = mb_ereg_replace("([^A-Za-z])(\')", "\\1 ' ", $value);
+//			$value = mb_ereg_replace("([^A-Za-z])(\')", "\\1 ' ", $value);
 			$value = mb_ereg_replace("(\')([^A-Za-z])", " ' \\2", $value);
 			$value = mb_ereg_replace("([A-Za-z])(\')([A-Za-z])", "\\1 '\\3", $value);
 			$value = mb_ereg_replace("\'$", " '", $value);
@@ -753,13 +753,13 @@ foreach($ArrayOf4s as $Name => $Array4) {
 						break;
 					}
 						
-					elseif (mb_strpos($target, "'", 0, "UTF-8") === 0 and $target != "'cause") {//make it just do the dagger and then change target to not have dagger/////
-						$blob = findMatch ($ArrayOf2s[$Name], $target, $fTracker, $diff, "English", $log, false, 0);
-						$temp55 = mb_substr($targetO, 1, mb_strlen($targetO, "UTF-8"), "UTF-8");
-						fwrite ($fh5, "$word	$temp55	".$blob[0].'	'.$blob[1].'	'.$spoken.'	'.$startT.'	'.$endT.'	'.$srtLine.'	English	'.$Name."\n");
-						$fTracker -=2;
-						$previousL = "English";
-					}
+//					elseif (mb_strpos($target, "'", 0, "UTF-8") === 0 and $target != "'cause") {//make it just do the dagger and then change target to not have dagger/////
+//						$blob = findMatch ($ArrayOf2s[$Name], $target, $fTracker, $diff, "English", $log, false, 0);
+//						$temp55 = mb_substr($targetO, 1, mb_strlen($targetO, "UTF-8"), "UTF-8");
+//						fwrite ($fh5, "$word	$temp55	".$blob[0].'	'.$blob[1].'	'.$spoken.'	'.$startT.'	'.$endT.'	'.$srtLine.'	English	'.$Name."\n");
+//						$fTracker -=2;
+//						$previousL = "English";
+//					}
 					
 					elseif (findEnglish($target, $ArrayAmbi)) {
 						$guess = true;

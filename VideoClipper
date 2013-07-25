@@ -1,9 +1,9 @@
-REM Originally prepared by Arthur Wendorf Spring 2013
-REM Last modified 2 May 2013
+# REM Originally prepared by Arthur Wendorf Spring 2013
+# REM Last modified 2 May 2013
 
-REM prepares the file BatchSplitter to generate  the script that
-REM will generate all of the video clips.  Executes it.
-REM Does the same for the creation of the clip thumbnail options.
+# REM prepares the file BatchSplitter to generate  the script that
+# REM will generate all of the video clips.  Executes it.
+# REM Does the same for the creation of the clip thumbnail options.
 
 php -f VideoClipper.php
 ./BatchSplitter
